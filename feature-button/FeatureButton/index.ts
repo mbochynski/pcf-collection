@@ -26,6 +26,17 @@ export class FeatureButton
     state: ComponentFramework.Dictionary
   ): void {
     this.notifyOutputChanged = notifyOutputChanged;
+    context.mode.trackContainerResize(true);
+  }
+
+  private getAllocatedSize(context: ComponentFramework.Context<IInputs>) {
+    const width = parseInt(context.mode.allocatedWidth as unknown as string);
+    const height = parseInt(context.mode.allocatedHeight as unknown as string);
+
+    return {
+      width,
+      height,
+    };
   }
 
   /**
@@ -36,7 +47,9 @@ export class FeatureButton
   public updateView(
     context: ComponentFramework.Context<IInputs>
   ): React.ReactElement {
-    const props: IButtonProps = { name: "Hello, World!" };
+    const { width, height } = this.getAllocatedSize(context);
+
+    const props: IButtonProps = { name: "Hello, World!", width, height };
     return React.createElement(Button, props);
   }
 
