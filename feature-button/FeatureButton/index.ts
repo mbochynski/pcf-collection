@@ -2,6 +2,13 @@ import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import { Button, IButtonProps } from "./Button";
 import * as React from "react";
 
+/*specifying events types here until it is unlocked by platform*/
+interface IPropBag<T> extends ComponentFramework.Context<T> {
+  parameters: T;
+  events: IEventBag;
+}
+declare type IEventBag = Record<string, () => void>;
+
 export class FeatureButton
   implements ComponentFramework.ReactControl<IInputs, IOutputs>
 {
@@ -44,13 +51,23 @@ export class FeatureButton
    * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
    * @returns ReactElement root react element for the control
    */
-  public updateView(
-    context: ComponentFramework.Context<IInputs>
-  ): React.ReactElement {
+  public updateView(context: IPropBag<IInputs>): React.ReactElement {
     const { width, height } = this.getAllocatedSize(context);
+    const image = context.parameters.Image.raw ?? "";
+    const text = context.parameters.Text.raw ?? "";
 
-    const props: IButtonProps = { name: "Hello, World!", width, height };
+    const props: IButtonProps = {
+      width,
+      height,
+      image,
+      text,
+      onClick: this.onClick.bind(this, context),
+    };
     return React.createElement(Button, props);
+  }
+
+  private onClick(context: IPropBag<IInputs>): void {
+    context.events.onClick();
   }
 
   /**

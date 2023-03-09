@@ -1,23 +1,32 @@
 import * as React from "react";
-import { Label } from "@fluentui/react";
 
 export interface IButtonProps {
-  name?: string;
   height: number;
   width: number;
+  text: string;
+  image: string;
+  onClick: () => void;
 }
 
-// TODO
-// [] add min width and min heigh?
-
-export const Button: React.FC<IButtonProps> = ({ height, width }) => {
+export const Button: React.FC<IButtonProps> = ({
+  height,
+  width,
+  text,
+  image,
+  onClick,
+}) => {
   return (
     <div
       style={{
         height: `${height}px`,
         width: `${width}px`,
+        minWidth: "64px",
+        minHeight: "64px",
         background: "blue",
       }}
-    ></div>
+    >
+      <button onClick={onClick}>{text}</button>
+      <img src={image} />
+    </div>
   );
 };
