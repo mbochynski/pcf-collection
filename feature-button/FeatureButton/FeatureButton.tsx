@@ -19,10 +19,15 @@ const Button = styled.button<{ height: number; width: number }>`
   cursor: pointer;
   -webkit-clip-path: url(#regular-shape);
   clip-path: url(#regular-shape);
+  border: none;
 
   &:hover {
     -webkit-clip-path: url(#hover-shape);
     clip-path: url(#hover-shape);
+  }
+
+  &:active {
+    top: 1px;
   }
 `;
 
