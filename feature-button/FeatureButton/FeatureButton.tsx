@@ -41,16 +41,16 @@ const Icon = styled.img<{ width: number; height: number }>`
   width: ${(p) => p.width};
   height: ${(p) => p.height};
   position: absolute;
-  top: 10%;
-  left: 15%;
+  top: 12%;
+  left: 16%;
 `;
 
 const Label = styled.span`
   position: absolute;
-  bottom: 15%;
+  bottom: 18%;
   left: 0;
   right: 0;
-  font-size: 1.4em;
+  font-size: 1.5em;
 `;
 
 export const FeatureButton: React.FC<IFeatureButtonProps> = ({
