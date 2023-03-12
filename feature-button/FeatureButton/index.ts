@@ -1,5 +1,8 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
-import { Button, IButtonProps } from "./Button";
+import {
+  FeatureButton as ReactFeatureButton,
+  IFeatureButtonProps,
+} from "./FeatureButton";
 import * as React from "react";
 
 /*specifying events types here until it is unlocked by platform*/
@@ -56,14 +59,14 @@ export class FeatureButton
     const image = context.parameters.Image.raw ?? "";
     const text = context.parameters.Text.raw ?? "";
 
-    const props: IButtonProps = {
+    const props: IFeatureButtonProps = {
       width,
       height,
       image,
       text,
       onClick: this.onClick.bind(this, context),
     };
-    return React.createElement(Button, props);
+    return React.createElement(ReactFeatureButton, props);
   }
 
   private onClick(context: IPropBag<IInputs>): void {
