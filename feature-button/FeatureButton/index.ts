@@ -4,6 +4,7 @@ import {
   IFeatureButtonProps,
 } from "./FeatureButton";
 import * as React from "react";
+import { IControlEvent } from "./IControlEvents";
 
 /*specifying events types here until it is unlocked by platform*/
 interface IPropBag<T> extends ComponentFramework.Context<T> {
@@ -17,6 +18,7 @@ export class FeatureButton
 {
   private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
   private notifyOutputChanged: () => void;
+  private event: IControlEvent;
 
   /**
    * Empty constructor.
@@ -64,13 +66,16 @@ export class FeatureButton
       height,
       image,
       text,
-      onClick: this.onClick.bind(this, context),
+      onClick: this.onClick.bind(this),
     };
     return React.createElement(ReactFeatureButton, props);
   }
 
-  private onClick(context: IPropBag<IInputs>): void {
-    context.events.onClick();
+  private onClick(): void {
+    this.event = {
+      EventName: "OnClick",
+    };
+    this.notifyOutputChanged();
   }
 
   /**
@@ -78,7 +83,9 @@ export class FeatureButton
    * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as “bound” or “output”
    */
   public getOutputs(): IOutputs {
-    return {};
+    return {
+      ...this.event,
+    };
   }
 
   /**
